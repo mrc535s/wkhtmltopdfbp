@@ -20,7 +20,7 @@ BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 $BP_DIR/compile-extensions/bin/check_stack_support
 
 WKHTMLTOPDF_URL="http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-i386.deb"
-WKHTMLTOPDF_PKG="$CACHE_DIR/wkhtmltopdf.deb"
+WKHTMLTOPDF_PKG="$TMP_PATH/wkhtmltopdf.deb"
 WKHTMLTOPDF_PATH="$TMP_PATH/wkhtmltopdf"
 WKHTMLTOPDF_BINARIES="$WKHTMLTOPDF_PATH/usr/local/bin"
 
@@ -53,7 +53,7 @@ wkhtmltopdf() {
   curl -L $WKHTMLTOPDF_URL -o $WKHTMLTOPDF_PKG
 
   echo "-----> Unpacking Debian package"
-  dpkg -i $WKHTMLTOPDF_PKG $WKHTMLTOPDF_PATH
+  dpkg -x $WKHTMLTOPDF_PKG $WKHTMLTOPDF_PATH
 
   echo "-----> Setting permissions"
   chmod +x $WKHTMLTOPDF_BINARIES/*
