@@ -24,20 +24,6 @@ WKHTMLTOPDF_PKG="$CACHE_DIR/wkhtmltopdf.deb"
 WKHTMLTOPDF_PATH="$TMP_PATH/wkhtmltopdf"
 WKHTMLTOPDF_BINARIES="$WKHTMLTOPDF_PATH/usr/local/bin"
 
-echo "-----> Downloading wkhtmltopdf Debian package"
-curl -L $WKHTMLTOPDF_URL -o $WKHTMLTOPDF_PKG
-
-echo "-----> Unpacking Debian package"
-dpkg -x $WKHTMLTOPDF_PKG $WKHTMLTOPDF_PATH
-
-echo "-----> Setting permissions"
-chmod +x $WKHTMLTOPDF_BINARIES/*
-
-echo "-----> Moving binaries to the right place"
-mv $WKHTMLTOPDF_BINARIES/* $BP_DIR/
-
-echo "-----> Cleaning up"
-rm -rf $WKHTMLTOPDF_PATH
 
 mkdir -p "$BUILD_DIR/.heroku/node/"
 cd $BUILD_DIR
@@ -62,7 +48,22 @@ source $BP_DIR/lib/dependencies.sh
 
 ### Handle errors
 
+wkhtmltopdf() {
+  echo "-----> Downloading wkhtmltopdf Debian package"
+  curl -L $WKHTMLTOPDF_URL -o $WKHTMLTOPDF_PKG
 
+  echo "-----> Unpacking Debian package"
+  dpkg -x $WKHTMLTOPDF_PKG $WKHTMLTOPDF_PATH
+
+  echo "-----> Setting permissions"
+  chmod +x $WKHTMLTOPDF_BINARIES/*
+
+  echo "-----> Moving binaries to the right place"
+  mv $WKHTMLTOPDF_BINARIES/* $BP_DIR/
+
+  echo "-----> Cleaning up"
+  rm -rf $WKHTMLTOPDF_PATH
+}
 
 handle_failure() {
   header "Build failed"
@@ -121,6 +122,7 @@ install_bins() {
 
 header "Installing binaries"
 install_bins | output "$LOG_FILE"
+wkhtmltopdf
 
 restore_cache() {
   local cache_status="$(get_cache_status)"
