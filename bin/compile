@@ -53,7 +53,7 @@ wkhtmltopdf() {
   curl -L $WKHTMLTOPDF_URL -o $WKHTMLTOPDF_PKG
 
   echo "-----> Unpacking Debian package"
-  dpkg -x $WKHTMLTOPDF_PKG $WKHTMLTOPDF_PATH
+  dpkg -i $WKHTMLTOPDF_PKG $WKHTMLTOPDF_PATH
 
   echo "-----> Setting permissions"
   chmod +x $WKHTMLTOPDF_BINARIES/*
