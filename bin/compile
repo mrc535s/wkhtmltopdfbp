@@ -24,12 +24,8 @@ WKHTMLTOPDF_PKG="$CACHE_DIR/wkhtmltopdf.deb"
 WKHTMLTOPDF_PATH="$TMP_PATH/wkhtmltopdf"
 WKHTMLTOPDF_BINARIES="$WKHTMLTOPDF_PATH/usr/local/bin"
 
-if [ -f $WKHTMLTOPDF_PKG ]; then
-  echo "-----> Using wkhtmltopdf Debian package from cache"
-else
-  echo "-----> Downloading wkhtmltopdf Debian package"
-  curl -L $WKHTMLTOPDF_URL -o $WKHTMLTOPDF_PKG
-fi
+echo "-----> Downloading wkhtmltopdf Debian package"
+curl -L $WKHTMLTOPDF_URL -o $WKHTMLTOPDF_PKG
 
 echo "-----> Unpacking Debian package"
 dpkg -x $WKHTMLTOPDF_PKG $WKHTMLTOPDF_PATH
